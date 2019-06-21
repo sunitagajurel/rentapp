@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, TextInput, View, Button,TouchableHighlight } from 'react-native'
-import firebase from '.././firebase'
+import  firebase from '../.././firebase'
 
 export default class Login extends React.Component {
   static navigationOptions = {

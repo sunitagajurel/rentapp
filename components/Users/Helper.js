@@ -1,4 +1,4 @@
-import  firebase from '.././firebase'
+import  firebase from '../.././firebase'
 
 class Helpers {
      static createNewVehicle(userId, obj){

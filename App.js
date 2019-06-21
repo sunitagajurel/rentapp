@@ -1,16 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation';
-import  ListVehicle from './screens/ListVehicle';
-import NewVehicle from './screens/NewVehicle';
-import Information from './screens/Information';
-import Login from './Users/Login';
-import SignUp from './Users/SignUp';
-import userProfile from './Users/userProfile';
-import Profile from './Users/Profile';
-import ChatRoom from './screens/ChatRoom'
+import  ListVehicle from './components/screens/ListVehicle';
+import NewVehicle from './components/screens/NewVehicle';
+import Information from './components/screens/Information';
+import Login from './components/Users/Login';
+import SignUp from './components/Users/SignUp';
+import userProfile from './components/Users/userProfile';
+import Profile from './components/Users/Profile';
+import ChatRoom from './components/screens/ChatRoom'
 
-import Loading from './Users/Loading';
+import Loading from '.components/Users/Loading';
 import fetchLocation from './maps/location'
 
 const RootStack = createStackNavigator(

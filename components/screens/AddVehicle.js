@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, ActivityIndicator, View, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
-import firebase from '.././firebase';
+import  firebase from '../.././firebase'
 
 class AddVehicle extends Component {
   static navigationOptions = {

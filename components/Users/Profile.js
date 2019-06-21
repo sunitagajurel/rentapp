@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Platform, Image, Text, View ,Button,Dimensions} from 'react-native'
-import firebase from ".././firebase";
+import  firebase from '../.././firebase'
 
 const { width, height } = Dimensions.get('window');
 
