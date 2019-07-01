@@ -1,31 +1,59 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import MapView from "react-native-maps";
+import React ,{Component}from 'react';
+import { StyleSheet, Text, View ,Button} from 'react-native';
+import MapView  ,{Marker }from "react-native-maps";
 
-const UsersMap = props => {
-  let userLocationMarker = null;
-
-  if (props.userLocation) {
-    userLocationMarker = <MapView.Marker coordinate={props.userLocation} />;
+ export default class fetchLocation extends Component {
+  constructor(props){
+  super(props);
+  this.state ={ 
+    latitude:0,
+    longitude:0,
+    error:null
   }
- 
+}
+    
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            error:null
+          
+        });
+    }
+    ,err => this.setState({error:error.message
+          
+            
+          
+        }),
+    {enableHighAccuracy:true,timeout:20000,maximimAge:2000}
+
+    );
+  }
+    
+
+
+  render(){
   return (
     <View style={styles.mapContainer}>
       <MapView
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+        region={{
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
           latitudeDelta: 0.0622,
           longitudeDelta: 0.0421
         }}
-        region={props.userLocation}
-        style={styles.map}
+        
+       styles ={{styles.map}}
       >
-        {userLocationMarker}
+        <Marker coordinate ={this.state} />
       </MapView>
     </View>
   );
-};
+}
+}
 
 const styles = StyleSheet.create({
   mapContainer: {
@@ -39,4 +67,3 @@ const styles = StyleSheet.create({
   }
 });
 
-export default UsersMap;

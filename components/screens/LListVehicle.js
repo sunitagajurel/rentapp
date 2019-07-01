@@ -17,8 +17,32 @@ import { List, ListItem, Button, Icon,SearchBar } from 'react-native-elements';
 import firebase from '../.././firebase';
 
 const { width, height } = Dimensions.get('window');
+ class Search extends React.Component {
+  state = {
+    search: '',
+  };
 
- export default class ListVehicle extends React.Component {
+  updateSearch = search => {
+    this.setState({ search });
+  };
+
+  render() {
+    const { search } = this.state;
+
+    return (
+      <SearchBar
+        placeholder="Type Here..."
+        onChangeText={this.updateSearch}
+        value={search}
+      />
+    );
+  }
+}
+
+
+
+
+export default class App extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'VehicleList',
@@ -31,16 +55,15 @@ const { width, height } = Dimensions.get('window');
       ),
     };
   };
-
-  constructor(props){
-    super(props)
-  this.state = {
-   
-    vehicles:[],
-    text:''
-  };
-}
-
+  constructor() {
+    super();
+    this.ref = firebase.database().ref('Vehicle');
+    this.unsubscribe = null;
+    this.state = {
+      vehicles: [],
+      loading: true,
+    };
+  }
 
   componentDidMount() {
    ref.on('value', (snap) => {
@@ -61,55 +84,35 @@ const { width, height } = Dimensions.get('window');
     })
     
     this.setState({
-      vehicles
-      
+      vehicles,
+      loading: false,
    });
   })
  }
 
-
-
-
-
-searchFilterFunction = text => {
-  
-    const newData = this.state.vehicles.filter(data => {
-      const itemData = `${data.type.toUpperCase()}`;
-      const textData = text.toUpperCase();
-
-      return itemData.indexOf(textData) > -1;
-    });
-    this.setState({
-      data: newData,
-
-    });
-  };
-
   
   render() {
-    
-    return (
-      <View> 
-      <SearchBar
-        placeholder="Type Here..."
-        onChangeText={text =>this.searchFilterFunction(text)}
-        
- />
+    if (this.state.loading) {
+      return <ActivityIndicator size="large" />;
+    }
 
-      <View> 
+    return (
      
-      <FlatList
-          data={this.state.data}
-         
+      <View >
+      <Search/>
+
+        <FlatList
+          data={this.state.vehicles}
+          {...console.log(this.state.vehicles)}
           renderItem={({ item }) =>
       <View style={styles.imageContainer}>
-     <TouchableOpacity activeOpacity = { .5 } onPress ={()=>{ this.props.navigation.navigate('Info',{id:item.uid})}}>
+     <TouchableOpacity activeOpacity = { .5 } onPress ={()=>{ this.props.navigation.navigate('Info') }} >
       <Image style={styles.image} resizeMode="cover" source={{ uri:item.image}} />
         </TouchableOpacity>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.type}</Text>
         <View style={styles.likesContainer}>
-          <Text style={styles.likes}>{item.rate}</Text>
+          <Text style={styles.likes}></Text>
         </View>
       </View>
     </View>
@@ -118,17 +121,12 @@ searchFilterFunction = text => {
 
 
         />
-
-      </View> 
-
-       </View>
+        
+      </View>
+      
     );
   }
 }
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {

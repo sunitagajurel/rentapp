@@ -10,7 +10,7 @@ import userProfile from './components/Users/userProfile';
 import Profile from './components/Users/Profile';
 import ChatRoom from './components/screens/ChatRoom'
 
-import Loading from '.components/Users/Loading';
+import Loading from './components/Users/Loading';
 import fetchLocation from './maps/location'
 
 const RootStack = createStackNavigator(

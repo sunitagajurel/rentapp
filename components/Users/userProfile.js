@@ -11,7 +11,7 @@ import {
  
 import ImagePicker from 'react-native-image-picker'
 import Helpers from './Helper'
-import  firebase from '.././firebase'
+import  firebase from '../.././firebase'
 import RNFetchBlob from 'react-native-fetch-blob'
  
 const Blob = RNFetchBlob.polyfill.Blob
@@ -54,8 +54,9 @@ export default class userProfile extends Component {
             imageHeight: '',
             imageWidth: '',
             name: '',
-            bio: '',
-            place: '',
+            contact_no: '',
+            location: '',
+            licence_no:'',
             uid: ''
         }
     }
@@ -106,8 +107,9 @@ export default class userProfile extends Component {
         if(this.state.uid){
             try {
                 this.state.name ? Helpers.setUserName(this.state.uid, this.state.name) : null
-                this.state.bio ? Helpers.setUserBio(this.state.uid, this.state.bio): null
-                this.state.place ? Helpers.setUserPlace(this.state.uid, this.state.place): null
+                this.state.contact_no? Helpers.setUserContactNo(this.state.uid, this.state.contact_no): null
+                this.state.location ? Helpers.setUserPlace(this.state.uid, this.state.location): null
+                this.state.licence_no? Helpers.setUserLicenceNo(this.state.uid, this.state.licence_no): null
                 this.state.imagePath ?
                     uploadImage(this.state.imagePath, `${this.state.uid}.jpg`)
                     .then((responseData) => {
@@ -142,16 +144,24 @@ export default class userProfile extends Component {
                 </TextInput>
                 <TextInput
                    
-                    placeholder="Bio"
-                    value={this.state.bio}
-                    onChangeText={(bio)=> this.setState({bio})} >
+                    placeholder="contact_no"
+                    value={this.state.contact_no}
+                    onChangeText={(contact_no)=> this.setState({contact_no})} >
                 </TextInput>
                 <TextInput
                     
-                    placeholder="Place"
-                    value={this.state.place}
-                    onChangeText={(place)=> this.setState({place})} >
+                    placeholder="location"
+                    value={this.state.location}
+                    onChangeText={(location)=> this.setState({location})} >
                 </TextInput>
+
+                 <TextInput
+                    
+                    placeholder="licence_no"
+                    value={this.state.licence_no}
+                    onChangeText={(licence_no)=> this.setState({licence_no})} >
+                </TextInput>
+
                 <TouchableHighlight
                     style={styles.buttonSave}
                     onPress={this.saveForm.bind(this)}

@@ -1,47 +1,70 @@
-import React from 'react';
+import React ,{Component}from 'react';
 import { StyleSheet, Text, View ,Button} from 'react-native';
-import UsersMap from './UserMap'
+import MapView  ,{Marker }from "react-native-maps";
 
-const fetchLocation =() => {
-	state ={ 
-		userLocation : null 
-	};
-	getLocation =() => {
-		navigator.geolocation.getCurrentPosition(
+ export default class fetchLocation extends Component {
+  constructor(props){
+  super(props);
+  this.state ={ 
+    latitude:0,
+    longitude:0,
+    error:null
+  }
+}
+    
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
-          userLocation: {
+          
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-            latitudeDelta: 0.0622,
-            longitudeDelta: 0.0421
-          }
+            error:null
+          
         });
     }
-		,err => console.log(err));
-		}
-		
-
-
-	
-	return (
-		<View style={styles.container}>
-			<Button title ="Get Location" onPress={() => this.getLocation()} /> 
-		<UsersMap
-          userLocation={this.state.getLocation}
+    ,err => this.setState({error:err.message
           
-        />
-         </View>
-		);
+            
+          
+        }),
+
+    
+
+    );
+  }
+    
+
+
+  render(){
+  return (
+    <View style={styles.mapContainer}>
+      <MapView
+        region={{
+          latitude:this.state.latitude,
+          longitude:this.state.longitude,
+          latitudeDelta: 0.0622,
+          longitudeDelta: 0.0421
+        }}
+        
+       style ={styles.map}
+      >
+        <Marker coordinate ={this.state} />
+      </MapView>
+    </View>
+  );
+}
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+  mapContainer: {
+    width: "100%",
+    height: "100%",
+    marginTop: 20
+  },
+  map: {
+    width: "100%",
+    height: "100%"
   }
 });
 
-export default fetchLocation;

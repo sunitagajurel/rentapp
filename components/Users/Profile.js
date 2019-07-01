@@ -7,12 +7,12 @@ const { width, height } = Dimensions.get('window');
 
 
 
-
 export default class Profile extends React.Component {
   static navigationOptions = {
     title: 'Your Profile',
   };
-  state = { currentUser: null
+  state = { currentUser: null,
+    userDetail:[],
    
    }
 
@@ -21,10 +21,24 @@ export default class Profile extends React.Component {
   componentDidMount() {
     
     const { currentUser } = firebase.auth()
+    let ref = firebase.database().ref('user/'+currentUser.uid+'/details')
 
-    this.setState({ currentUser, 
-    uid :currentUser.uid
+    ref.on('value', (snap) => {
+    console.log(snap.val())
+       const userDetail = [];
+       
+
+    this.setState({ 
+   
+    userDetail:snap.val(),
+    currentUser,
+    uid:currentUser.uid
+
    });
+
+})
+
+
 
   }
 
@@ -37,11 +51,14 @@ export default class Profile extends React.Component {
       <View style={styles.container}>
 
       <View >
-      <Image  style={{ width: 200, height: 200, borderRadius: 200 / 2 }}resizeMode="cover" source={{ uri: `https://picsum.photos/200/300?image=${Math.floor((Math.random() * 100) + 1)}`, }} />
+      <Image  style={{ width: 200, height: 200, borderRadius: 200 / 2 }}resizeMode="cover" source={{ uri: this.state.userDetail.url}} />
       
     </View>
         <Text style ={{ }}>
           Hi {currentUser && currentUser.email}!
+        </Text>
+        <Text style ={{ }}>
+          Hi {this.state.userDetail.name}!
         </Text>
 
          <View style={styles.container}>

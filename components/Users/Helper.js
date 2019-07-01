@@ -17,14 +17,19 @@ class Helpers {
         return firebase.database().ref(userNamePath).set(name)
     }
 
-    static setUserBio(userId, bio){
-        let userNamePath = "user/"+userId+"/details/bio"
-        return firebase.database().ref(userNamePath).set(bio)
+    static setUserContactNo(userId,contact_no){
+        let userNamePath = "user/"+userId+"/details/contact_no"
+        return firebase.database().ref(userNamePath).set(contact_no)
     }
 
-    static setUserPlace(userId, place){
-        let userNamePath = "user/"+userId+"/details/place"
-        return firebase.database().ref(userNamePath).set(place)
+    static setUserPlace(userId,location){
+        let userNamePath = "user/"+userId+"/details/location"
+        return firebase.database().ref(userNamePath).set(location)
+    }
+
+    static setUserLicenceNo(userId,licence_no){
+        let userNamePath = "user/"+userId+"/details/licence_no"
+        return firebase.database().ref(userNamePath).set(licence_no)
     }
 
     static setImageUrl(userId, url){

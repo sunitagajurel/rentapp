@@ -13,7 +13,7 @@ import {
 
 import ImagePicker from 'react-native-image-picker'
 import Helpers from '../Users/Helper'
-import  firebase from '.././firebase'
+import  firebase from '../.././firebase'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import RNFetchBlob from 'react-native-fetch-blob'
 
