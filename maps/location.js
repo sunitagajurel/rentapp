@@ -2,7 +2,7 @@ import React ,{Component}from 'react';
 import { StyleSheet, Text, View ,Button} from 'react-native';
 import MapView  ,{Marker }from "react-native-maps";
 
- export default class fetchLocation extends Component {
+ export default class FetchLocation extends Component {
   constructor(props){
   super(props);
   this.state ={ 
@@ -41,11 +41,12 @@ import MapView  ,{Marker }from "react-native-maps";
     <View style={styles.mapContainer}>
       <MapView
         region={{
-          latitude:this.state.latitude,
-          longitude:this.state.longitude,
+          latitude:this.props.data.latitude,
+          longitude:this.props.data.longitude,
           latitudeDelta: 0.0622,
           longitudeDelta: 0.0421
         }}
+        
         
        style ={styles.map}
       >

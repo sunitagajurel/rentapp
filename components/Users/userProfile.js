@@ -55,7 +55,8 @@ export default class userProfile extends Component {
             imageWidth: '',
             name: '',
             contact_no: '',
-            location: '',
+            latitude:0,
+            longitude:0,
             licence_no:'',
             uid: ''
         }
@@ -63,9 +64,33 @@ export default class userProfile extends Component {
     componentDidMount() {
     
     const { currentUser } = firebase.auth()
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            error:null,
+            currentUser
 
-    this.setState({ currentUser })
+          
+        });
+    }
+    ,err => this.setState({error:err.message
+          
+            
+          
+        }),
+
+    
+
+    );
   }
+    
+
+
+
+  
 
 
    async  componentWillMount (){
@@ -108,7 +133,8 @@ export default class userProfile extends Component {
             try {
                 this.state.name ? Helpers.setUserName(this.state.uid, this.state.name) : null
                 this.state.contact_no? Helpers.setUserContactNo(this.state.uid, this.state.contact_no): null
-                this.state.location ? Helpers.setUserPlace(this.state.uid, this.state.location): null
+                this.state.longitude ? Helpers.setUserLongitude(this.state.uid, this.state.longitude): null
+                this.state.latitude ? Helpers.setUserLatitude(this.state.uid, this.state.latitude): null
                 this.state.licence_no? Helpers.setUserLicenceNo(this.state.uid, this.state.licence_no): null
                 this.state.imagePath ?
                     uploadImage(this.state.imagePath, `${this.state.uid}.jpg`)
@@ -117,6 +143,7 @@ export default class userProfile extends Component {
                     })
                     .done()
                 : null
+
  
                 this.props.navigation.navigate('Profile')
                 

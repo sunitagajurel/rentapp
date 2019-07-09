@@ -55,7 +55,7 @@ export default class Profile extends React.Component {
       
     </View>
         <Text style ={{ }}>
-          Hi {currentUser && currentUser.email}!
+          Hi {currentUser && currentUser.email && this.state.uid}!
         </Text>
         <Text style ={{ }}>
           Hi {this.state.userDetail.name}!

@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, Image, Button } from 'react-native'
+import FetchLocation from '../../maps/location' 
 import ImagePicker from 'react-native-image-picker'
 
 
@@ -41,7 +42,11 @@ componentDidMount() {
   render() {
     
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,backgroundColor: '#FFA07A'}}>
+
+
+      <View>
+       
+
         <Text> 
         	posted by : {this.state.clients.name}
         	
@@ -52,11 +57,11 @@ componentDidMount() {
         	
          </Text> 
          <Text> 
-        	
-        	
         	location :{this.state.clients.location}
          </Text> 
-        <Button title="Connect to the Rantee" onPress ={()=>{ this.props.navigation.navigate('ChatRoom') }}/>
+       
+       
+        <FetchLocation data ={this.state.clients} /> 
       </View>
     )
   }

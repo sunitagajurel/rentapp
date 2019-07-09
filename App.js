@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';  
 import  ListVehicle from './components/screens/ListVehicle';
 import NewVehicle from './components/screens/NewVehicle';
 import Information from './components/screens/Information';
+import Main from './components/screens/Main';
 import Login from './components/Users/Login';
 import SignUp from './components/Users/SignUp';
 import userProfile from './components/Users/userProfile';
@@ -11,7 +13,7 @@ import Profile from './components/Users/Profile';
 import ChatRoom from './components/screens/ChatRoom'
 
 import Loading from './components/Users/Loading';
-import fetchLocation from './maps/location'
+import FetchLocation from './maps/location'
 
 const RootStack = createStackNavigator(
   {
@@ -21,10 +23,11 @@ const RootStack = createStackNavigator(
     SignUp:SignUp,
     Info:Information,
     ChatRoom:ChatRoom,
+    Main:Main
     
   },
   {
-    initialRouteName: 'List',
+    initialRouteName: 'Main',
     
     },
 
@@ -55,8 +58,17 @@ export default createAppContainer(createBottomTabNavigator(
   {   
     
     MilijuliYatayat:RootStack ,
-    Profile:authStack,
-    maps:fetchLocation,
+     Profile: {  
+        screen:authStack,  
+        navigationOptions:{  
+          
+          tabBarIcon:({tintColor})=>(  
+              <Icon name="ios-person" color={tintColor} size={25}/>  
+          )  
+        }  
+        
+    },  
+    maps:FetchLocation,
     
   },
   {
@@ -68,7 +80,7 @@ export default createAppContainer(createBottomTabNavigator(
     width: 100,
   },
   style: {
-    backgroundColor: '#566573',
+    backgroundColor: '#581845',
   },
 }
   }

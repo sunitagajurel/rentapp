@@ -10,7 +10,7 @@ import {
     Dimensions
 } from 'react-native'
 
-
+import DatePicker from 'react-native-datepicker'
 import ImagePicker from 'react-native-image-picker'
 import Helpers from '../Users/Helper'
 import  firebase from '../.././firebase'
@@ -30,7 +30,9 @@ export default class NewVehicle extends Component {
             type: '',
             brand: '',
             rate: '',
-            date:'',
+            location:'',
+            pickupdate:"2016-05-01",
+            dropoffdate:"2016-05-01",
             imagePath: '',
             imageHeight: '',
             imageWidth: ''
@@ -102,7 +104,8 @@ export default class NewVehicle extends Component {
         if(this.state.uid){
             if(this.state.type &&
                 this.state.brand&&
-                this.state.date &&
+                this.state.pickupdate &&
+                this.state.dropoffdate&&
                 this.state.rate &&
                 this.state.imagePath
                 ) {
@@ -112,7 +115,8 @@ export default class NewVehicle extends Component {
                                 const obj = {
                                     type: this.state.type,
                                     brand: this.state.brand,
-                                    date: this.state.date,
+                                    pickupdate: this.state.date,
+                                    dropoffdate:this.state.dropoffdate,
                                     rate: this.state.rate,
                                     image: responseData
                                 }
@@ -165,6 +169,62 @@ export default class NewVehicle extends Component {
                             onChangeText={(type) => this.setState({type})}
                         />
                     </View>
+                    <View style={{ flexDirection: 'row'}}>
+
+      <DatePicker
+
+        style={{width: 200,marginTop:10}}
+        date={this.state.pickupdate}
+        mode="date"
+        placeholder="pickup date"
+        format="YYYY-MM-DD"
+        minDate="2016-05-01"
+        maxDate="2016-06-01"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left:0,
+            top: 4,
+            marginLeft:0
+          },
+          dateInput: {
+            marginLeft:36,
+            marginTop:10
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(pickupdate) => {this.setState({pickupdate:pickupdate})}}
+      />
+
+      <DatePicker
+
+        style={{width: 200,marginTop:10}}
+        date={this.state.dropoffdate}
+        mode="date"
+        placeholder="dropoff date"
+        format="YYYY-MM-DD"
+        minDate="2016-05-01"
+        maxDate="2016-06-01"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left:0,
+            top: 4,
+            marginLeft:0
+          },
+          dateInput: {
+            marginLeft:36,
+            marginTop:10
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(dropoffdate) => {this.setState({dropoffdate:dropoffdate})}}
+      />
+      </View>
                     <View style={styles.containerInput}>
                         <TextInput 
                             style={styles.input}
@@ -177,10 +237,10 @@ export default class NewVehicle extends Component {
                     <View style={styles.containerInput}>
                         <TextInput 
                             style={styles.input}
-                            value={this.state.date}
-                            placeholder="available date"
+                            value={this.state.location}
+                            placeholder="location"
                             placeholderTextColor="white"
-                            onChangeText={(date) => this.setState({date})}
+                            onChangeText={(location) => this.setState({location})}
                         />
                     </View>
                     <View style={styles.containerInput}>

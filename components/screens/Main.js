@@ -15,8 +15,8 @@ export default class Main extends Component {
   constructor(props){
     super(props)
     this.state = {
-    pickupdate:"2016-05-15",
-    dropoffdate:"2016-05-15",
+    date:"2016-05-15",
+    dropoffdate:"2016-05-10",
     type:'',
     rate:'',
     location:''
@@ -27,40 +27,45 @@ export default class Main extends Component {
     return (
       <View style ={{flex:1}}>
       <Image 
-     source={require('./mainscreen.png')}  
+    source={require('./mainscreen.png')}  
     style={{width: 500, height: 300}}
    />
-   <View style = {{backgroundColor:'#FF5733'}}>
+   <View style = {{backgroundColor:'#FF5733',height:1000}}>
+      
+
+ <View style={{ flexDirection: 'row'}}>
+
       <DatePicker
+
         style={{width: 200,marginTop:10}}
-        pickupdate={this.state.pickupdate}
+        date={this.state.date}
         mode="date"
         placeholder="pickup date"
         format="YYYY-MM-DD"
-        minDate="2019-05-01"
-        maxDate="2019-06-01"
+        minDate="2016-05-01"
+        maxDate="2016-06-01"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
           dateIcon: {
             position: 'absolute',
-            left: 0,
+            left:0,
             top: 4,
-            marginLeft: 0
+            marginLeft:0
           },
           dateInput: {
-            marginLeft: 36
+            marginLeft:36,
+            marginTop:10
           }
           // ... You can check the source to find the other keys.
         }}
-        onDateChange={(pickupdate) => {this.setState({pickupdate: pickupdate})}}
+        onDateChange={(date) => {this.setState({date:date})}}
       />
 
-
-
       <DatePicker
+
         style={{width: 200,marginTop:10}}
-        dropoffdate={this.state.dropoffdate}
+        date={this.state.dropoffdate}
         mode="date"
         placeholder="dropoff date"
         format="YYYY-MM-DD"
@@ -81,8 +86,10 @@ export default class Main extends Component {
           }
           // ... You can check the source to find the other keys.
         }}
-        onDateChange={(dropoffdate) => {this.setState({dropoffdate: dropoffdate})}}
+        onDateChange={(dropoffdate) => {this.setState({dropoffdate:dropoffdate})}}
       />
+      </View>
+
 
        <View style={styles.containerInput}>
                         <TextInput 
@@ -166,7 +173,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 5,
         marginBottom: 10,
-        marginTop :10,
+        marginTop :0,
     },
     containerImage: {
         flexDirection: 'row'

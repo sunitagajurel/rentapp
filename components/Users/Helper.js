@@ -22,10 +22,15 @@ class Helpers {
         return firebase.database().ref(userNamePath).set(contact_no)
     }
 
-    static setUserPlace(userId,location){
-        let userNamePath = "user/"+userId+"/details/location"
-        return firebase.database().ref(userNamePath).set(location)
+    static setUserLongitude(userId,longitude){
+        let userNamePath = "user/"+userId+"/details/longitude"
+        return firebase.database().ref(userNamePath).set(longitude)
     }
+    static setUserLatitude(userId,latitude){
+        let userNamePath = "user/"+userId+"/details/latitude"
+        return firebase.database().ref(userNamePath).set(latitude)
+    }
+
 
     static setUserLicenceNo(userId,licence_no){
         let userNamePath = "user/"+userId+"/details/licence_no"
