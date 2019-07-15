@@ -1,12 +1,9 @@
 import React ,{Component}from 'react';
-import { StyleSheet, Text, View ,Button} from 'react-native';
-import MapView  ,{Marker }from "react-native-maps";
 import getDirections from 'react-native-google-maps-directions'
-
- export default class FetchLocation extends Component {
-  constructor(props){
-  super(props);
-  
+import { StyleSheet, Text, View ,Button} from 'react-native'; 
+export default class Maps extends Component {
+constructor(props){
+        super(props)
         this.state = {
             sourcelongitude:0,
             sourcelatitude:0,
@@ -15,7 +12,7 @@ import getDirections from 'react-native-google-maps-directions'
         }
     }
 
-  componentDidMount() {
+componentDidMount() {
     navigator.geolocation.getCurrentPosition(
        (position) => {
          
@@ -23,7 +20,6 @@ import getDirections from 'react-native-google-maps-directions'
          this.setState({
            sourcelatitude: position.coords.latitude,
            sourcelongitude: position.coords.longitude,
-           
            error: null,
          });
        },
@@ -34,17 +30,18 @@ import getDirections from 'react-native-google-maps-directions'
 
 
 
+    
 
 
-  handleGetDirections = () => {
+handleGetDirections = () => {
     const data = {
        source: {
         latitude:this.state.sourcelatitude,
         longitude:this.state.sourcelongitude
       },
       destination: {
-        latitude:this.props.data.latitude ,
-        longitude: this.props.data.longitude
+        latitude: -33.8600024,
+        longitude: 18.697459
       },
       params: [
         {
@@ -55,6 +52,25 @@ import getDirections from 'react-native-google-maps-directions'
           key: "dir_action",
           value: "navigate"       // this instantly initializes navigation using the given travel mode
         }
+      ],
+      waypoints: [
+        {
+          latitude: -33.8600025,
+          longitude: 18.697452,
+        },
+        {
+          latitude: -33.8600026,
+          longitude: 18.697453,
+        },
+           {
+          latitude: -33.8600036,
+          longitude: 18.697493,
+        },
+           {
+          latitude: -33.8600046,
+          longitude: 18.69743,
+        },
+ 
       ]
     }
  

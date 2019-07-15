@@ -31,8 +31,8 @@ export default class NewVehicle extends Component {
             brand: '',
             rate: '',
             location:'',
-            pickupdate:"2016-05-01",
-            dropoffdate:"2016-05-01",
+            pickupdate:"2019-05-01",
+            dropoffdate:"2019-05-01",
             imagePath: '',
             imageHeight: '',
             imageWidth: ''
@@ -115,7 +115,7 @@ export default class NewVehicle extends Component {
                                 const obj = {
                                     type: this.state.type,
                                     brand: this.state.brand,
-                                    pickupdate: this.state.date,
+                                    pickupdate: this.state.pickupdate,
                                     dropoffdate:this.state.dropoffdate,
                                     rate: this.state.rate,
                                     image: responseData
@@ -178,8 +178,8 @@ export default class NewVehicle extends Component {
         mode="date"
         placeholder="pickup date"
         format="YYYY-MM-DD"
-        minDate="2016-05-01"
-        maxDate="2016-06-01"
+        minDate="2019-05-01"
+        maxDate="2019-10-01"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -205,8 +205,8 @@ export default class NewVehicle extends Component {
         mode="date"
         placeholder="dropoff date"
         format="YYYY-MM-DD"
-        minDate="2016-05-01"
-        maxDate="2016-06-01"
+        minDate="2019-07-01"
+        maxDate="2019-10-01"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{

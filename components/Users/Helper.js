@@ -51,15 +51,9 @@ class Helpers {
             callback(imageUrl)
         })
     }
-    static getName(userId, callback){
-        let userNamePath = "user/"+userId+"/details/name"
-        firebase.database().ref(userNamePath).on('value', (snapshot) => {
-            let name = ''
-            if(snapshot.val()){
-                name = snapshot.val()
-            }
-            callback(name)
-        })
+     static setLocationMarker(userId, obj){
+        let userNamePath = "/UserLocation/"+Date.now()
+        return firebase.database().ref(userNamePath).set(obj)
     }
 }
 

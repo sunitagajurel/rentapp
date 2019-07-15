@@ -139,7 +139,14 @@ export default class userProfile extends Component {
                 this.state.imagePath ?
                     uploadImage(this.state.imagePath, `${this.state.uid}.jpg`)
                     .then((responseData) => {
-                        Helpers.setImageUrl(this.state.uid, responseData)
+                        const obj = {
+                                    name: this.state.name,
+                                    longitude: this.state.longitude,
+                                    latitude: this.state.latitude,
+                                    uid:this.state.uid,
+                                }
+                        Helpers.setImageUrl(this.state.uid, responseData);
+                        Helpers.setLocationMarker(this.state.uid,obj)
                     })
                     .done()
                 : null

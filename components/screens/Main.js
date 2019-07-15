@@ -10,40 +10,79 @@ import {
     Dimensions
 } from 'react-native'
 import DatePicker from 'react-native-datepicker'
+import  firebase from '../.././firebase'
+let ref = firebase.database().ref('Vehicle');
+import SearchedVehicle from './SearchedVehicle'
  
 export default class Main extends Component {
   constructor(props){
     super(props)
     this.state = {
-    date:"2016-05-15",
-    dropoffdate:"2016-05-10",
+    pickupdate:"2019-05-15",
+    dropoffdate:"2019-05-10",
     type:'',
     rate:'',
-    location:''
+    location:'',
+    info:[],
+    data:false
   }
   }
- 
+  Search(){
+    ref.on('value', (snap) => {
+    console.log(snap.numChildren());
+    
+    console.log('hello')
+    const info = [];
+     snap.forEach((child) => {
+  const { type,brand,pickupdate,dropoffdate,rate,image,uid} =child.val();
+  if( pickupdate ==this.state.pickupdate||rate ==this.state.rate){
+      info.push({
+        key:child.key,
+        type,
+        brand,
+        pickupdate,
+        dropoffdate,
+        rate,
+        image,
+        uid,
+      });
+    }
+    })
+   
+    
+    this.setState({
+      info,
+      data:true
+      
+   });
+   { this.props.navigation.navigate('Search',{id:this.state.info})}
+  })
+ }
+
+
+
   render(){
     return (
       <View style ={{flex:1}}>
       <Image 
     source={require('./mainscreen.png')}  
-    style={{width: 500, height: 300}}
+    style={{width: 500, height: 200}}
    />
-   <View style = {{backgroundColor:'#FF5733',height:1000}}>
+   <View style = {{backgroundColor:'#BC8F8F',height:1000}}>
       
 
  <View style={{ flexDirection: 'row'}}>
 
+
       <DatePicker
 
         style={{width: 200,marginTop:10}}
-        date={this.state.date}
+         date={this.state.pickupdate}
         mode="date"
         placeholder="pickup date"
         format="YYYY-MM-DD"
-        minDate="2016-05-01"
-        maxDate="2016-06-01"
+        minDate="2019-05-01"
+        maxDate="2019-06-01"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -59,13 +98,13 @@ export default class Main extends Component {
           }
           // ... You can check the source to find the other keys.
         }}
-        onDateChange={(date) => {this.setState({date:date})}}
+        onDateChange={(pickupdate) => {this.setState({pickupdate:pickupdate})}}
       />
 
       <DatePicker
 
         style={{width: 200,marginTop:10}}
-        date={this.state.dropoffdate}
+         date={this.state.dropoffdate}
         mode="date"
         placeholder="dropoff date"
         format="YYYY-MM-DD"
@@ -121,7 +160,7 @@ export default class Main extends Component {
 
          <View >
                <TouchableHighlight
-                 onPress={() => this.props.navigation.navigate('List')}
+                 onPress={this.Search.bind(this)}
                   style={[styles.button, {marginBottom: 10}]}
                     >
                   <Text style={styles.saveButtonText}>Search</Text>

@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, Image, Button } from 'react-native'
+import { View, Text, Image, Button ,TouchableOpacity} from 'react-native'
 import FetchLocation from '../../maps/location' 
 import ImagePicker from 'react-native-image-picker'
+import call from 'react-native-phone-call'
 
 
 
@@ -13,7 +14,7 @@ export default class Information extends React.Component {
     super(props)
   this.state = {
    
-    clients:[],
+    users:[],
     text:''
   };
 }
@@ -29,7 +30,7 @@ componentDidMount() {
 
       this.setState({ 
    
-    clients:snap.val()
+    users:snap.val()
 
    });
     })
@@ -38,30 +39,38 @@ componentDidMount() {
 
  }
 
+ makeCall =(number)=> {
+ 	const args ={
+ 		number:number,
+ 		prompt:false
+ 	}
+ 	call(args).catch(console.error)
+ }
+
   
   render() {
     
     return (
+    	<View>
 
-
-      <View>
+   
        
 
         <Text> 
-        	posted by : {this.state.clients.name}
+        	posted by : {this.state.users.name}
         	
-         </Text> 
-         <Text> 
-        	
-        	contact_no:{this.state.clients.licence_no}
-        	
-         </Text> 
-         <Text> 
-        	location :{this.state.clients.location}
-         </Text> 
+</Text> 
        
        
-        <FetchLocation data ={this.state.clients} /> 
+        <FetchLocation data ={this.state.users} /> 
+
+
+        
+         <Button title ='call' style ={{marginTop:'10',width:'30',alignItem:'centre'}}
+         onPress ={()=> this.makeCall (this.state.users.licence_no)}
+         /> 
+         
+         
       </View>
     )
   }

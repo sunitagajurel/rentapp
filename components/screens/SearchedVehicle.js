@@ -18,7 +18,7 @@ import firebase from '../.././firebase';
 
 const { width, height } = Dimensions.get('window');
 
- export default class ListVehicle extends React.Component {
+ export default class SearchedVehicle extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'VehicleList',
@@ -34,73 +34,33 @@ const { width, height } = Dimensions.get('window');
 
   constructor(props){
     super(props)
-  this.state = {
-   
-    vehicles:[],
-    text:''
-  };
-}
-
-
-  componentDidMount() {
-   ref.on('value', (snap) => {
-    console.log(snap.val());
-    console.log('hello')
-    const vehicles = [];
-     snap.forEach((child) => {
-      const { type,brand,pickupdate,dropoffdate,rate,image,uid} =child.val();
-      vehicles.push({
-        key:child.key,
-        type,
-        brand,
-        pickupdate,
-        dropoffdate,
-        rate,
-        image,
-        uid,
-      });
-    })
-    
-    this.setState({
-      vehicles
-      
-   });
-  })
- }
-
-
-
-
-
-searchFilterFunction = text => {
+    this.state ={
+      info:[],
+    }
   
-    const newData = this.state.vehicles.filter(data => {
-      const itemData = `${data.type.toUpperCase()}`;
-      const textData = text.toUpperCase();
 
-      return itemData.indexOf(textData) > -1;
-    });
+
+  }
+
+
+componentDidMount() {
+  const { navigation } = this.props;
+    const info = navigation.getParam('id', 'NO-ID');
     this.setState({
-      data: newData,
+      info 
+    })
 
-    });
-  };
+
+}
 
   
   render() {
     
     return (
       <View> 
-      <SearchBar
-        placeholder="Type Here..."
-        onChangeText={text =>this.searchFilterFunction(text)}
-        
- />
-
-      <View> 
      
       <FlatList
-          data={this.state.data}
+          data={this.state.info}
          
           renderItem={({ item }) =>
       <View style ={{ flexDirection: 'row',padding:20,height:300,borderWidth:2}}>
@@ -132,7 +92,7 @@ searchFilterFunction = text => {
 
       </View> 
 
-       </View>
+       
     );
   }
 }

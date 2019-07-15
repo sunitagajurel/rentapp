@@ -6,6 +6,7 @@ import  ListVehicle from './components/screens/ListVehicle';
 import NewVehicle from './components/screens/NewVehicle';
 import Information from './components/screens/Information';
 import Main from './components/screens/Main';
+import SearchedVehicle from './components/screens/SearchedVehicle';
 import Login from './components/Users/Login';
 import SignUp from './components/Users/SignUp';
 import userProfile from './components/Users/userProfile';
@@ -14,6 +15,7 @@ import ChatRoom from './components/screens/ChatRoom'
 
 import Loading from './components/Users/Loading';
 import FetchLocation from './maps/location'
+import Maps from './maps/map'
 
 const RootStack = createStackNavigator(
   {
@@ -23,7 +25,8 @@ const RootStack = createStackNavigator(
     SignUp:SignUp,
     Info:Information,
     ChatRoom:ChatRoom,
-    Main:Main
+    Main:Main,
+    Search:SearchedVehicle,
     
   },
   {
@@ -40,8 +43,11 @@ const authStack =createStackNavigator(
    SignUp:SignUp,
    Login: Login,
 
-   userProfile:userProfile,
+   
    Profile:Profile,
+   userProfile:userProfile,
+   maps:FetchLocation,
+  
 
  },
  {
@@ -68,7 +74,7 @@ export default createAppContainer(createBottomTabNavigator(
         }  
         
     },  
-    maps:FetchLocation,
+    map:Maps,
     
   },
   {

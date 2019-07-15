@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Platform, Image, Text, View ,Button,Dimensions} from 'react-native'
+import { StyleSheet, Platform, Image, Text, View ,Button,Dimensions,FlatList,TouchableOpacity} from 'react-native'
 import  firebase from '../.././firebase'
 
 const { width, height } = Dimensions.get('window');
@@ -13,6 +13,7 @@ export default class Profile extends React.Component {
   };
   state = { currentUser: null,
     userDetail:[],
+    vehicles:[],
    
    }
 
@@ -22,6 +23,7 @@ export default class Profile extends React.Component {
     
     const { currentUser } = firebase.auth()
     let ref = firebase.database().ref('user/'+currentUser.uid+'/details')
+    let vref = firebase.database().ref('user/'+currentUser.uid+'/vehicles')
 
     ref.on('value', (snap) => {
     console.log(snap.val())
@@ -37,10 +39,32 @@ export default class Profile extends React.Component {
    });
 
 })
+    vref.on('value', (snap) => {
+    console.log(snap.val());
+    console.log('hello')
+    const vehicles = [];
+     snap.forEach((child) => {
+      const { type,brand,pickupdate,dropoffdate,rate,image,uid} =child.val();
+      vehicles.push({
+        key:child.key,
+        type,
+        brand,
+        pickupdate,
+        dropoffdate,
+        rate,
+        image,
+        uid,
+      });
+    })
+    
 
+this.setState({
+      vehicles
+      
+   });
 
-
-  }
+  })
+}
 
  
 
@@ -61,7 +85,7 @@ export default class Profile extends React.Component {
           Hi {this.state.userDetail.name}!
         </Text>
 
-         <View style={styles.container}>
+         <View style={styles.container,{flexDirection: 'row'}}>
               <View style={styles.buttonContainer}>
                 <Button title="Edit your details here"
                 onPress={() => this.props.navigation.navigate('userProfile')}
@@ -74,8 +98,42 @@ export default class Profile extends React.Component {
               </View>
             </View>
 
+          <Text style ={{marginTop:40}}> Your Posts </Text> 
+          <FlatList
+          data={this.state.vehicles}
+         
+          renderItem={({ item }) =>
+      <View style ={{ flexDirection: 'row',padding:20,height:300,borderWidth:2}}>
+      
+     <TouchableOpacity activeOpacity = { .5 } onPress ={()=>{ this.props.navigation.navigate('Info',{id:item.uid})}}>
+      <Image style={styles.vimage} resizeMode="cover" source={{ uri:item.image}} />
+        </TouchableOpacity>
+        
+      <View style={styles.textContainer}>
+        <Text >Company:{item.brand}</Text>
 
+
+
+
+        <Text >PickupDate:{item.pickupdate}</Text>
+        <Text >DropoffDate:{item.dropoffdate}</Text>
+        <Text >Rate:{item.rate}</Text>
+
+        
+          
+        </View>
       </View>
+   
+  }
+
+
+
+        />
+
+      </View> 
+
+
+      
     )
   }
 }
@@ -114,5 +172,18 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderRadius:500,
  
-  }
+  },
+  vimage: {
+    flex: 1,
+    width:200,
+    padding:0,
+    marginBottom: 5,
+  },
+  textContainer: {
+    flexDirection: 'column',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 15,
+  },
 })
